@@ -1,0 +1,1 @@
+select extract(year from f.DTLANCAMENTO) as Ano, sum(f.VALORTOTAL) as LUCRO_TOTAL from ECUSCASTROLANDAFINANCEIRO f group by Ano
