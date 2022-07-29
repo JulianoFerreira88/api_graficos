@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChartResource {
 
     private final File[] setores;
-    private final String path = "/sql";
+    private final String path = "/home/jelastic/APP/sql";
 
     @Autowired
     private ConnectionFactory connection;
@@ -54,7 +54,7 @@ public class ChartResource {
                     File relatorio = rels[j];
                     if (relatorio.getName().replace(".sql", "").equals(nm_relatorio)) {
                         try {
-                            Connection con = connection.getConnection();
+                            Connection con = this.connection.getConnection();
                             FileToString fts = new FileToString(relatorio);
                             String query = fts.fileToString();
                             Relatorio rel = new Relatorio();
@@ -73,7 +73,7 @@ public class ChartResource {
                             rel.setNome(relatorio.getName().replace(".sql", ""));
                             return rel;
                         } catch (Exception e) {
-                            System.out.println("Error: " + e);
+                            System.out.println("Error ao criar resultSet: " + e);
                         }
                     }
 
