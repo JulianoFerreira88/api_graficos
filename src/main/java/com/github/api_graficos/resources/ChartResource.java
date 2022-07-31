@@ -1,17 +1,18 @@
 package com.github.api_graficos.resources;
 
-import com.github.api_graficos.connection.ConnectionFactory;
 import com.github.api_graficos.model.Relatorio;
 import com.github.api_graficos.service.FileToString;
 import java.io.File;
+import java.io.FileInputStream;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,11 +24,19 @@ public class ChartResource {
 
     private final File[] setores;
     private final String path = "/home/jelastic/APP/sql";
-
-    @Autowired
-    private ConnectionFactory connection;
+    private Properties p;
+    private Connection con;
 
     public ChartResource() {
+        try {
+            p = new Properties();
+            p.load(new FileInputStream("/home/jelastic/db.properties"));
+            this.con = DriverManager.getConnection(p.getProperty("url"),
+                    p.getProperty("user"),
+                    p.getProperty("pass"));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         setores = new File(path).listFiles();
     }
 
@@ -54,7 +63,7 @@ public class ChartResource {
                     File relatorio = rels[j];
                     if (relatorio.getName().replace(".sql", "").equals(nm_relatorio)) {
                         try {
-                            Connection con = this.connection.getConnection();
+
                             FileToString fts = new FileToString(relatorio);
                             String query = fts.fileToString();
                             Relatorio rel = new Relatorio();
