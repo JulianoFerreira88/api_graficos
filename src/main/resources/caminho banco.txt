@@ -1,0 +1,27 @@
+Below are the Firebird and FTP access data.
+Firebird access data:
+Host: afw-bdsan.jelastic.saveincloud.net
+
+Usuário Firebird: SYSDBA
+
+Senha Firebird: iPhfbcpTO0AhYWpRdMg2
+
+Caminho do banco: /opt/firebird/data/NAMEDATABASE.FDB
+
+FTP Access Data:
+Host: afw-bdsan.jelastic.saveincloud.net
+
+Usuário FTP: ftp-user
+
+Senha FTP: 4noSABfaB3lR7CsbNMB9
+
+Access port:
+Serviço: FIREBIRD Porta: 11564
+
+Serviço: FTP Porta: 13365
+
+Importante: NÃO utilize a opção "Reimplantar" da ferramenta de Alteração de Topologia, pois isso causará problemas em seu servidor Firebird, para atualizar a versão do Firebird ou Sistema Operacional é recomendado criar um novo ambiente.
+
+ 
+
+IPv6: O Firebird fornece suporte a IPv6 a partir da versão 3.0, porém é necessário que a porta 3050 esteja acessível, caso contrário, pode ser necessário contatar seu provedor de internet.
