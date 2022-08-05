@@ -14,4 +14,10 @@ public class Relatorio {
 
     private String nome;
     private HashMap data;
+
+    @Override
+    public String toString() {
+        return "Relatorio: " + "Nome: " + nome + " - data: " + data.toString();
+    }
+
 }

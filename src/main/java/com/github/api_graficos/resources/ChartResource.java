@@ -1,5 +1,6 @@
 package com.github.api_graficos.resources;
 
+import com.github.api_graficos.log.Log;
 import com.github.api_graficos.model.Relatorio;
 import com.github.api_graficos.service.FileToString;
 import java.io.File;
@@ -26,11 +27,13 @@ public class ChartResource {
     private final String path = "/home/jelastic/APP/sql";
     private Properties p;
     private Connection con;
+    private final File logFile;
 
     public ChartResource() {
+        String dbProperties = "/home/jelastic/db.properties";
         try {
             p = new Properties();
-            p.load(new FileInputStream("/home/jelastic/db.properties"));
+            p.load(new FileInputStream(dbProperties));
             this.con = DriverManager.getConnection(p.getProperty("url"),
                     p.getProperty("user"),
                     p.getProperty("pass"));
@@ -38,6 +41,7 @@ public class ChartResource {
             System.out.println(e);
         }
         setores = new File(path).listFiles();
+        logFile = new File("/home/jelastic/APP/log.txt");
     }
 
     @GetMapping("/setores/{nm_setor}")
@@ -80,6 +84,8 @@ public class ChartResource {
                             }
                             rel.setData(map);
                             rel.setNome(relatorio.getName().replace(".sql", ""));
+                            Log log = new Log(logFile);
+                            log.log(rel.toString());
                             return rel;
                         } catch (Exception e) {
                             System.out.println("Error ao criar resultSet: " + e);
